@@ -21,10 +21,10 @@ using UnityEngine.Networking;
 /// </summary>
 public static class AvatarVoiceAPI
 {
-    const string ChatUrl = "https://api.openai.com/v1/chat/completions";
-    const string SttUrl = "https://api.openai.com/v1/audio/transcriptions";
-    const string TtsUrl = "https://api.openai.com/v1/audio/speech";
-    const string EmbedUrl = "https://api.openai.com/v1/embeddings";
+    const string ChatUrl = "https://api.edenai.run/v2/text/chat";
+    const string SttUrl = "https://api.edenai.run/v2/audio/speech_to_text";
+    const string TtsUrl = "https://api.edenai.run/v2/audio/text_to_speech";
+    const string EmbedUrl = "https://api.edenai.run/v2/text/embeddings";
 
     [Serializable] public class Msg { public string role; public string content; }
 
@@ -166,21 +166,33 @@ public static class AvatarVoiceAPI
     /// <summary>The conversation call. `extraSystem` is appended to the
     /// persona's system prompt -- this is how long-term memory rides along:
     /// not a database, just more text in the context window.</summary>
-    public static IEnumerator Chat(CharacterPersona persona, List<Msg> history,
-                                   Action<string> onDone, Action<string> onError,
-                                   string extraSystem = null)
+    public static IEnumerator Chat(
+        CharacterPersona persona, 
+        List<Msg> history,
+        Action<string> onDone, 
+        Action<string> onError,
+        string extraSystem = null)
     {
+        // New Changes
         var sb = new StringBuilder();
-        sb.Append("{\"model\":\"").Append(persona.chatModel).Append("\",");
-        sb.Append("\"temperature\":").Append(persona.temperature.ToString("0.00",
-            System.Globalization.CultureInfo.InvariantCulture)).Append(',');
-        sb.Append("\"max_tokens\":").Append(persona.maxTokens).Append(',');
+
+        sb.Append("{");
+        sb.Append("\"providers\":\"openai\",");
+        sb.Append("\"model\":\"").Append(persona.chatModel).Append("\",");
+        sb.Append("\"temperature\":").Append(persona.temperature.ToString(
+            "0.00", System.Globalization.CultureInfo.InvariantCulture)).Append(',');
+        sb.Append("\"max_tokens\":") .Append(persona.maxTokens).Append(',');
+
         sb.Append("\"messages\":[{\"role\":\"system\",\"content\":\"")
           .Append(Escape(persona.ResolvedPrompt + (extraSystem ?? ""))).Append("\"}");
+
         foreach (var m in history)
             sb.Append(",{\"role\":\"").Append(m.role).Append("\",\"content\":\"")
               .Append(Escape(m.content)).Append("\"}");
         sb.Append("]}");
+
+        Debug.Log("REQUEST:");
+        Debug.Log(sb.ToString());
 
         using (var req = new UnityWebRequest(ChatUrl, "POST"))
         {
@@ -190,12 +202,21 @@ public static class AvatarVoiceAPI
             req.SetRequestHeader("Authorization", "Bearer " + ApiKey);
             req.timeout = 60;
             yield return req.SendWebRequest();
+
             if (req.result != UnityWebRequest.Result.Success)
             {
                 onError("Chat failed (" + req.responseCode + "): " + Peek(req));
                 yield break;
             }
-            onDone(ReadField(req.downloadHandler.text, "content"));
+
+            string response = req.downloadHandler.text;
+            string text = ReadField(response, "generated_text");
+            if (string.IsNullOrEmpty(text)) text = ReadField(response, "content");
+
+            Debug.Log(req.downloadHandler.text);
+            onDone(text);
+            
+            //onDone(ReadField(req.downloadHandler.text, "content"));
         }
     }
 
@@ -291,12 +312,12 @@ public static class AvatarVoiceAPI
                                           Action<AudioClip> onDone, Action<string> onError)
     {
         var sb = new StringBuilder();
-        sb.Append("{\"model\":\"").Append(model).Append("\",");
-        sb.Append("\"voice\":\"").Append(voice).Append("\",");
-        sb.Append("\"response_format\":\"wav\",");
-        if (!string.IsNullOrEmpty(direction))
-            sb.Append("\"instructions\":\"").Append(Escape(direction)).Append("\",");
-        sb.Append("\"input\":\"").Append(Escape(text)).Append("\"}");
+
+        sb.Append("{");
+        sb.Append("\"providers\":\"openai\",");
+        sb.Append("\"language\":\"en-US\",");
+        sb.Append("\"text\":\"").Append(Escape(text)).Append("\"");
+        sb.Append("}");
 
         using (var req = new UnityWebRequest(TtsUrl, "POST"))
         {
@@ -306,6 +327,10 @@ public static class AvatarVoiceAPI
             req.SetRequestHeader("Authorization", "Bearer " + ApiKey);
             req.timeout = 90;
             yield return req.SendWebRequest();
+
+            Debug.Log("TTS RESPONSE:");
+            Debug.Log(req.downloadHandler.text);
+            
             if (req.result != UnityWebRequest.Result.Success)
             {
                 onError("Text-to-speech failed (" + req.responseCode + "): " + Peek(req));

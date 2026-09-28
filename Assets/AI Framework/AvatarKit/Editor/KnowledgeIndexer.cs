@@ -123,11 +123,19 @@ public static class KnowledgeIndexer
     /// and it keeps the indexer to one file with zero packages.</summary>
     static float[] EmbedBlocking(string text)
     {
-        string provider = "openai";
+       //string provider = "openai";
 
+        string body =
+            "{"
+            + "\"texts\":[\"" + AvatarVoiceAPI.Escape(text) + "\"],"
+            + "\"providers\":\"openai\""
+            + "}";
+
+        /*
         var body = "{\"providers\":\"" + provider + "\",\"text\":\"" + AvatarVoiceAPI.Escape(text) + "\"}";
-
-        using (var req = new UnityWebRequest("https://edenai.run", "POST"))
+        */
+        
+        using (var req = new UnityWebRequest("https://api.edenai.run/v2/text/embeddings", "POST"))
         {
             req.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(body));
             req.downloadHandler = new DownloadHandlerBuffer();
@@ -145,6 +153,8 @@ public static class KnowledgeIndexer
                                (req.downloadHandler != null ? req.downloadHandler.text : req.error));
                 return null;
             }
+
+            //Debug.Log("[EDEN RESPONSE] " + req.downloadHandler.text);
             return AvatarVoiceAPI.ReadFloatArray(req.downloadHandler.text, "embedding");
         }
 
