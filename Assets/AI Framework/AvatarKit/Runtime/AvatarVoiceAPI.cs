@@ -21,10 +21,11 @@ using UnityEngine.Networking;
 /// </summary>
 public static class AvatarVoiceAPI
 {
-    const string ChatUrl = "https://api.edenai.run/v2/text/chat";
-    const string SttUrl = "https://api.edenai.run/v2/audio/speech_to_text";
-    const string TtsUrl = "https://api.edenai.run/v2/audio/text_to_speech";
-    const string EmbedUrl = "https://api.edenai.run/v2/text/embeddings";
+    const string ChatUrl = "https://api.edenai.run/v3/chat/completions";
+    const string SttUrl = "https://api.edenai.run/v3/universal-ai/async";
+    const string UploadUrl = "https://api.edenai.run/v3/upload";    
+    //const string TtsUrl = "https://api.edenai.run/v3/audio/speech";
+    const string EmbedUrl = "https://api.edenai.run/v3/embeddings";
 
     [Serializable] public class Msg { public string role; public string content; }
 
@@ -135,45 +136,164 @@ public static class AvatarVoiceAPI
     }
 
     // ================================================================= 1. EARS
-
-    public static IEnumerator Transcribe(byte[] wav, string model, string hint,
-                                         Action<string> onDone, Action<string> onError)
+    public static IEnumerator Transcribe(byte[] wav, string model, string hint, Action<string> onDone, Action<string> onError)
     {
-        var form = new List<IMultipartFormSection>
+        if (wav == null || wav.Length == 0)
         {
-            new MultipartFormFileSection("file", wav, "speech.wav", "audio/wav"),
-            new MultipartFormDataSection("model", model),
-        };
-        if (!string.IsNullOrEmpty(hint))
-            form.Add(new MultipartFormDataSection("prompt", hint));
+            onError("The recording is empty.");
+            yield break;
+        }
 
-        using (var req = UnityWebRequest.Post(SttUrl, form))
+        if (!HasKey)
+        {
+            onError("Eden AI API key was not found at:\n" + KeyPath);
+            yield break;
+        }
+
+        //Upload the WAV file.
+        string fileId = null;
+
+        var uploadForm = new List<IMultipartFormSection> {new MultipartFormFileSection("file", wav, "speech.wav", "audio/wav"), new MultipartFormDataSection("purpose", "speech")};
+
+        using (var req = UnityWebRequest.Post(UploadUrl, uploadForm))
         {
             req.SetRequestHeader("Authorization", "Bearer " + ApiKey);
             req.timeout = 60;
+
             yield return req.SendWebRequest();
+
             if (req.result != UnityWebRequest.Result.Success)
             {
-                onError("Speech-to-text failed (" + req.responseCode + "): " + Peek(req));
+                onError("Audio upload failed (" + req.responseCode + "): " + Peek(req));
                 yield break;
             }
-            onDone(ReadField(req.downloadHandler.text, "text"));
+
+            string uploadResponse = req.downloadHandler.text;
+            Debug.Log("Eden AI upload response: " + uploadResponse);
+
+            fileId = ReadField(uploadResponse, "file_id");
+
+            if (string.IsNullOrEmpty(fileId))
+            {
+                onError("Upload succeeded, but no file_id was returned.");
+                yield break;
+            }
         }
+
+        //Submit async job transcription
+        string jobId = null;
+
+        string body = "{\"model\":\"" + Escape(model) + "\",\"input\":{\"file\":\"" + Escape(fileId) + "\",\"language\":\"en\"}}";
+
+        using (var req = new UnityWebRequest(SttUrl, "POST"))
+        {
+            req.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(body));
+            req.downloadHandler = new DownloadHandlerBuffer();
+
+            req.SetRequestHeader("Content-Type", "application/json");
+            req.SetRequestHeader("Authorization", "Bearer " + ApiKey);
+            req.timeout = 60;
+
+            yield return req.SendWebRequest();
+
+            string response = req.downloadHandler.text;
+            Debug.Log("Eden AI STT job response: " + response);
+
+            if (req.result != UnityWebRequest.Result.Success)
+            {
+                onError("STT job submission failed (" + req.responseCode + "): " + response);
+                yield break;
+            }
+
+            string status = ReadField(response, "status");
+
+            // Eden AI may return the completed transcription immediately
+            if (status == "success")
+            {
+                string transcript = ReadField(response, "text");
+
+                // ReadField searches the whole JSON, so it can find output.text
+                if (!string.IsNullOrWhiteSpace(transcript))
+                {
+                    onDone(transcript);
+                    yield break;
+                }
+
+                onError("STT succeeded, but no transcript was found: " + response);
+                yield break;
+            }
+
+            // Else, look for an async job identifier
+            jobId = ReadField(response, "job_id");
+
+            if (string.IsNullOrEmpty(jobId)) jobId = ReadField(response, "public_id");
+
+            if (string.IsNullOrEmpty(jobId)) jobId = ReadField(response, "id");
+
+            if (string.IsNullOrEmpty(jobId))
+            {
+                onError("No job ID returned. Eden AI response: " + response);
+                yield break;
+            }
+
+        }
+
+        // Poll until the transcription finishes
+        string resultUrl = SttUrl + "/" + UnityWebRequest.EscapeURL(jobId);
+
+        for (int attempt = 0; attempt < 40; attempt++)
+        {
+            yield return new WaitForSeconds(1.5f);
+
+            using (var req = UnityWebRequest.Get(resultUrl))
+            {
+                req.SetRequestHeader("Authorization", "Bearer " + ApiKey);
+                req.timeout = 30;
+
+                yield return req.SendWebRequest();
+
+                string response = req.downloadHandler.text;
+                Debug.Log("Eden AI STT status: " + response);
+
+                if (req.result != UnityWebRequest.Result.Success)
+                {
+                    onError("STT polling failed (" + req.responseCode + "): " + response);
+                    yield break;
+                }
+
+                string status = ReadField(response, "status");
+
+                if (status == "failed" || status == "error")
+                {
+                    onError("Transcription failed: " + response);
+                    yield break;
+                }
+
+                if (status == "finished" || status == "success")
+                {
+                    string transcript = ReadField(response, "text");
+
+                    if (string.IsNullOrWhiteSpace(transcript))
+                    {
+                        onError("Job finished, but no transcript was found: " + response);
+                        yield break;
+                    }
+                    onDone(transcript);
+                    yield break;
+                }
+            }
+        }
+        onError("Transcription timed out while waiting for the job.");
     }
+
 
     // ================================================================ 2. BRAIN
 
     /// <summary>The conversation call. `extraSystem` is appended to the
     /// persona's system prompt -- this is how long-term memory rides along:
     /// not a database, just more text in the context window.</summary>
-    public static IEnumerator Chat(
-        CharacterPersona persona, 
-        List<Msg> history,
-        Action<string> onDone, 
-        Action<string> onError,
-        string extraSystem = null)
+    public static IEnumerator Chat( CharacterPersona persona, List<Msg> history, Action<string> onDone, Action<string> onError, string extraSystem = null)
     {
-        // New Changes
         var sb = new StringBuilder();
 
         sb.Append("{");
@@ -215,8 +335,6 @@ public static class AvatarVoiceAPI
 
             Debug.Log(req.downloadHandler.text);
             onDone(text);
-            
-            //onDone(ReadField(req.downloadHandler.text, "content"));
         }
     }
 
@@ -308,39 +426,141 @@ public static class AvatarVoiceAPI
                            onDone, onError);
     }
 
-    public static IEnumerator SpeakOpenAI(string text, string voice, string model, string direction,
-                                          Action<AudioClip> onDone, Action<string> onError)
+    
+    public static IEnumerator SpeakOpenAI(
+    string text,
+    string voice,
+    string model,
+    string direction,
+    Action<AudioClip> onDone,
+    Action<string> onError)
+{
+    string url = "https://api.edenai.run/v3/universal-ai";
+
+    // Eden AI ElevenLabs model
+    string modelId = "audio/tts/elevenlabs/eleven_multilingual_v2";
+
+    // Place ElevenLabs voice ID here if needed to change vvv
+    string voiceId = "NCXuWNJQQvNzPsNoESwl";
+
+    if (string.IsNullOrWhiteSpace(text))
     {
-        var sb = new StringBuilder();
+        onError("Cannot generate speech because the text is empty.");
+        yield break;
+    }
 
-        sb.Append("{");
-        sb.Append("\"providers\":\"openai\",");
-        sb.Append("\"language\":\"en-US\",");
-        sb.Append("\"text\":\"").Append(Escape(text)).Append("\"");
-        sb.Append("}");
+    if (!HasKey)
+    {
+        onError("Eden AI API key was not found at:\n" + KeyPath);
+        yield break;
+    }
 
-        using (var req = new UnityWebRequest(TtsUrl, "POST"))
+    // Build the input JSON.
+    var input = new StringBuilder();
+
+    input.Append("{");
+    input.Append("\"text\":\"").Append(Escape(text)).Append("\",");
+    input.Append("\"audio_format\":\"mp3\",");
+    input.Append("\"voice\":\"").Append(Escape(voiceId)).Append("\"");
+    input.Append("}");
+
+    string body =
+        "{\"model\":\"" + Escape(modelId) +
+        "\",\"input\":" + input + "}";
+
+    // Send the text-to-speech request to Eden AI
+    using (var req = new UnityWebRequest(url, "POST"))
+    {
+        req.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(body));
+
+        req.downloadHandler = new DownloadHandlerBuffer();
+
+        req.SetRequestHeader("Content-Type", "application/json");
+        req.SetRequestHeader("Authorization", "Bearer " + ApiKey);
+
+        req.timeout = 90;
+
+        yield return req.SendWebRequest();
+
+        string responseText = req.downloadHandler.text;
+
+        Debug.Log("Eden AI TTS response: " + responseText);
+
+        if (req.result != UnityWebRequest.Result.Success)
         {
-            req.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(sb.ToString()));
-            req.downloadHandler = new DownloadHandlerBuffer();
-            req.SetRequestHeader("Content-Type", "application/json");
-            req.SetRequestHeader("Authorization", "Bearer " + ApiKey);
-            req.timeout = 90;
-            yield return req.SendWebRequest();
+            onError( "Eden AI TTS failed (" + req.responseCode + "): " + responseText);
+            yield break;
+        }
 
-            Debug.Log("TTS RESPONSE:");
-            Debug.Log(req.downloadHandler.text);
-            
-            if (req.result != UnityWebRequest.Result.Success)
+        // Parse the Eden AI response
+        EdenTTSResponse response = JsonUtility.FromJson<EdenTTSResponse>(responseText);
+
+        if (response == null || response.output == null || string.IsNullOrEmpty(response.output.audio_resource_url))
+        {
+            onError("Eden AI did not return an audio URL.");
+            yield break;
+        }
+
+        string audioUrl = response.output.audio_resource_url;
+
+        Debug.Log("Eden AI audio URL: " + audioUrl);
+
+        // Check expiry if the URL is expired
+        // Mostly used for bug testing
+        if (Uri.TryCreate(audioUrl, UriKind.Absolute, out Uri parsedUri))
+        {
+            string query = parsedUri.Query;
+
+            foreach (string parameter in query.TrimStart('?').Split('&'))
             {
-                onError("Text-to-speech failed (" + req.responseCode + "): " + Peek(req));
+                string[] parts = parameter.Split('=');
+
+                if (parts.Length == 2 && Uri.UnescapeDataString(parts[0]) == "Expires")
+                {
+                    if (long.TryParse(parts[1], out long expiry))
+                    {
+                        long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+                        if (expiry <= now)
+                        {
+                            onError("The Eden AI audio URL has expired. " + "Generate new audio and try again.");
+                            yield break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        // Download and decode the MP3
+        Debug.Log("Downloading Eden AI MP3 audio.");
+
+        using (var clipRequest = UnityWebRequestMultimedia.GetAudioClip(audioUrl, AudioType.MPEG))
+        {
+            clipRequest.timeout = 90;
+
+            yield return clipRequest.SendWebRequest();
+
+            if (clipRequest.result != UnityWebRequest.Result.Success)
+            {
+                onError("MP3 download or decoding failed: HTTP " + clipRequest.responseCode + "; " + clipRequest.error);
                 yield break;
             }
-            var clip = AvatarWav.ToAudioClip(req.downloadHandler.data, "Speech");
-            if (clip == null) { onError("Could not decode the returned audio."); yield break; }
+
+            AudioClip clip = DownloadHandlerAudioClip.GetContent(clipRequest);
+
+            if (clip == null)
+            {
+                onError("Unity could not decode the MP3 audio.");
+                yield break;
+            }
+
+            Debug.Log("MP3 decoded successfully. Duration: " + clip.length + " seconds.");
             onDone(clip);
         }
     }
+}
+
 
     /// <summary>
     /// The same job through ElevenLabs, so the avatar can use any voice in your
@@ -475,4 +695,18 @@ public static class AvatarVoiceAPI
         }
         return sb.ToString();
     }
+}
+
+[Serializable]
+public class EdenTTSResponse
+{
+    public string status;
+    public EdenTTSOutput output;
+    public string error;
+}
+
+[Serializable]
+public class EdenTTSOutput
+{
+    public string audio_resource_url;
 }
