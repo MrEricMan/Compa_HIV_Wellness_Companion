@@ -1,6 +1,9 @@
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// THE CONVERSATION LOOP.
@@ -31,6 +34,11 @@ public class AvatarBrain : MonoBehaviour
 
     [Header("YOUR CHARACTER -- drag your Persona asset here")]
     public CharacterPersona persona;
+
+    [Header("Speech Transcription UI")]
+    [SerializeField] private TMP_InputField playerSpeechTextBox;
+    [Header("Above Head UI")]
+    [SerializeField] private TMP_Text statusText;
 
     [Header("Wiring (leave empty to auto-find)")]
     public AudioSource voice;
@@ -124,6 +132,115 @@ public class AvatarBrain : MonoBehaviour
     /// <summary>Fold in any journal left over from last session BEFORE the
     /// greeting, so the greeting already knows about it. This is what makes
     /// stopping Play at any moment safe: nothing said is ever lost.</summary>
+
+    void OnSpeechButtonClicked()
+    {
+        if (_state == State.Idle)
+        {
+            _buttonHeld = true;
+        }
+    }
+
+    public void OnSpeechButtonDown()
+    {
+        if (_state == State.Idle || _state == State.Speaking) {_buttonHeld = true;}
+    }
+
+    public void OnSpeechButtonUp()
+    {
+        _buttonHeld = false;
+    }
+
+    void UpdateStatusText()
+    {
+        if (statusText != null) {statusText.text = _status;}
+    }
+
+    
+    public void SendTypedMessage()
+    {
+        if (playerSpeechTextBox == null)
+        {
+            Debug.LogError("[AvatarKit] Text input field is not assigned.");
+            return;
+        }
+
+        if (_state == State.Error ||
+            _state == State.Thinking ||
+            _state == State.Recording)
+            return;
+
+        string message = playerSpeechTextBox.text.Trim();
+
+        if (string.IsNullOrWhiteSpace(message))
+            return;
+
+        // Stop any previous reply if the player sends a new message
+        if (voice != null && voice.isPlaying)
+            voice.Stop();
+
+        StopAllCoroutines();
+
+        _lastUser = message;
+        playerSpeechTextBox.text = "";
+
+        StartCoroutine(RunTextTurn(message));
+    }
+
+    IEnumerator RunTextTurn(string message)
+    {
+        _state = State.Thinking;
+        _status = "thinking...";
+
+        _history.Add(new AvatarVoiceAPI.Msg {role = "user", content = message});
+
+        while (_history.Count > Mathf.Max(2, persona.memoryTurns)) _history.RemoveAt(0);
+
+        // Retrieve relevant knowledge, if enabled
+        string context = null;
+        _retrieved = null;
+
+        if (persona.useKnowledge && _knowledge.Loaded)
+        {
+            float[] embedding = null;
+
+            yield return StartCoroutine(AvatarVoiceAPI.Embed(message, AvatarKnowledge.EmbedModel, v => embedding = v, e => Debug.LogWarning("[AvatarKit] Embedding failed: " + e)));
+
+            if (embedding != null)
+            {
+                _retrieved = _knowledge.TopK(embedding, 3);
+                context = AvatarKnowledge.ContextBlock(_retrieved);
+            }
+        }
+
+        string extraSystem = (MemoryOn ? memory.PromptAddition : "") + (context ?? "");
+
+        string reply = null;
+
+        yield return StartCoroutine(AvatarVoiceAPI.Chat(persona, _history, r => reply = r, Fail, string.IsNullOrEmpty(extraSystem) ? null : extraSystem));
+
+        if (_state == State.Error) yield break;
+
+        if (string.IsNullOrWhiteSpace(reply))
+        {
+            _state = State.Idle;
+            _status = "No response received.";
+            yield break;
+        }
+
+        _lastReply = reply.Trim();
+
+        // Show the AI's response in the same input field
+        playerSpeechTextBox.text = _lastReply;
+
+        _history.Add(new AvatarVoiceAPI.Msg {role = "assistant", content = _lastReply});
+
+        if (MemoryOn) {memory.NotifyExchange(_lastUser, _lastReply, persona);}
+
+        // Speak the reply aloud
+        yield return StartCoroutine(SpeakLine(_lastReply));
+    }
+
     IEnumerator Boot()
     {
         if (MemoryOn && memory.HasPending)
@@ -132,8 +249,7 @@ public class AvatarBrain : MonoBehaviour
             yield return StartCoroutine(memory.UpdateNow(persona));
             _status = "";
         }
-        if (greetOnStart && !string.IsNullOrEmpty(persona.greeting))
-            yield return StartCoroutine(Greet());
+        if (greetOnStart && !string.IsNullOrEmpty(persona.greeting)) yield return StartCoroutine(Greet());
     }
 
     IEnumerator Greet()
@@ -167,6 +283,7 @@ public class AvatarBrain : MonoBehaviour
         if (_state == State.Error) return;
 
         bool held = _buttonHeld || TalkKeyHeld();
+        
         if (held && _state == State.Idle) StartRecording();
         else if (!held && _state == State.Recording) StopAndSend();
 
@@ -190,15 +307,8 @@ public class AvatarBrain : MonoBehaviour
     /// API is actually enabled.</summary>
     bool TalkKeyHeld()
     {
-#if ENABLE_INPUT_SYSTEM
-        var kb = UnityEngine.InputSystem.Keyboard.current;
-        if (kb != null) return kb.spaceKey.isPressed;
-#endif
-#if ENABLE_LEGACY_INPUT_MANAGER
-        return Input.GetKey(KeyCode.Space);
-#else
+        // Now disabled
         return false;
-#endif
     }
 
     void StartRecording()
@@ -207,6 +317,7 @@ public class AvatarBrain : MonoBehaviour
         _recordStart = Time.time;
         _state = State.Recording;
         _status = "listening...";
+        UpdateStatusText();
         if (voice != null && voice.isPlaying) voice.Stop();   // let the user interrupt
     }
 
@@ -224,6 +335,7 @@ public class AvatarBrain : MonoBehaviour
         _recording = null;
         _state = State.Thinking;
         _status = "thinking...";
+        UpdateStatusText();
         StartCoroutine(RunTurn(wav));
     }
 
@@ -242,7 +354,18 @@ public class AvatarBrain : MonoBehaviour
         }
 
         _lastUser = heard.Trim();
+
+        // Display the transcript immediately after speech recognition finishes.
+        if (playerSpeechTextBox != null)
+        {
+            playerSpeechTextBox.SetTextWithoutNotify("You: " + _lastUser);
+            playerSpeechTextBox.ForceLabelUpdate();
+            Canvas.ForceUpdateCanvases();
+        }
+
+
         _history.Add(new AvatarVoiceAPI.Msg { role = "user", content = _lastUser });
+
         while (_history.Count > Mathf.Max(2, persona.memoryTurns)) _history.RemoveAt(0);
 
         // The librarian runs BEFORE the brain: embed the question, fetch the
@@ -273,7 +396,19 @@ public class AvatarBrain : MonoBehaviour
         if (_state == State.Error) yield break;
 
         _lastReply = reply.Trim();
-        _history.Add(new AvatarVoiceAPI.Msg { role = "assistant", content = _lastReply });
+
+        if (playerSpeechTextBox != null)
+        {
+            playerSpeechTextBox.SetTextWithoutNotify("AI: " + _lastReply);
+            playerSpeechTextBox.ForceLabelUpdate();
+            Canvas.ForceUpdateCanvases();
+        }
+
+        _history.Add(new AvatarVoiceAPI.Msg
+        {
+            role = "assistant",
+            content = _lastReply
+        });
 
         // Journal the exchange to disk the moment it exists -- the distil
         // pass runs in the background and at next launch (see AvatarMemory).
@@ -290,6 +425,7 @@ public class AvatarBrain : MonoBehaviour
     IEnumerator SpeakLine(string line)
     {
         _status = "speaking...";
+        UpdateStatusText();
         AudioClip clip = null;
         // AvatarVoice (if present) picks OpenAI or ElevenLabs; otherwise the Persona's voice.
         var speak = VoiceOn ? avatarVoice.Speak(line, c => clip = c, Fail)
@@ -339,6 +475,8 @@ public class AvatarBrain : MonoBehaviour
         if (!string.IsNullOrEmpty(_lastUser))
             GUI.Label(new Rect(28, h - 246, w - 56, 30), "you:  " + _lastUser, _small);
 
+        // Create a hold down button
+        /*
         var r = new Rect(w * 0.5f - 150, h - 96, 300, 60);
         string label = _state == State.Recording ? "listening -- release to send"
                      : _state == State.Thinking ? "thinking..."
@@ -348,9 +486,12 @@ public class AvatarBrain : MonoBehaviour
         if (Event.current.type == EventType.MouseDown && r.Contains(Event.current.mousePosition))
             _buttonHeld = true;
         if (Event.current.type == EventType.MouseUp) _buttonHeld = false;
+        */
 
+        /*
         if (!string.IsNullOrEmpty(_status))
             GUI.Label(new Rect(24, 18, w - 48, 26), _status, _small);
+        */
 
         // "it runs" and "it works" are different claims -- show the memory
         // line count so students can SEE the notes grow.
