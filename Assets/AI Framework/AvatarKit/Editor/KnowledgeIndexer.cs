@@ -123,6 +123,44 @@ public static class KnowledgeIndexer
     /// and it keeps the indexer to one file with zero packages.</summary>
     static float[] EmbedBlocking(string text)
     {
+       //string provider = "openai";
+
+        string body =
+            "{"
+            + "\"texts\":[\"" + AvatarVoiceAPI.Escape(text) + "\"],"
+            + "\"providers\":\"openai\""
+            + "}";
+
+        /*
+        var body = "{\"providers\":\"" + provider + "\",\"text\":\"" + AvatarVoiceAPI.Escape(text) + "\"}";
+        */
+        
+        using (var req = new UnityWebRequest("https://api.edenai.run/v2/text/embeddings", "POST"))
+        {
+            req.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(body));
+            req.downloadHandler = new DownloadHandlerBuffer();
+            req.SetRequestHeader("Content-Type", "application/json");
+
+            req.SetRequestHeader("Authorization", "Bearer " + AvatarVoiceAPI.ApiKey);
+            req.timeout = 30;
+
+            var op = req.SendWebRequest();
+            while (!op.isDone) System.Threading.Thread.Sleep(15);
+
+            if (req.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("[AvatarKit] Eden AI embedding failed (" + req.responseCode + "): " +
+                               (req.downloadHandler != null ? req.downloadHandler.text : req.error));
+                return null;
+            }
+
+            //Debug.Log("[EDEN RESPONSE] " + req.downloadHandler.text);
+            return AvatarVoiceAPI.ReadFloatArray(req.downloadHandler.text, "embedding");
+        }
+
+
+        // This is the oringal code in case this fix does not work vvvv
+        /*
         var body = "{\"model\":\"" + AvatarKnowledge.EmbedModel + "\",\"input\":\"" +
                    AvatarVoiceAPI.Escape(text) + "\"}";
         using (var req = new UnityWebRequest("https://api.openai.com/v1/embeddings", "POST"))
@@ -142,5 +180,6 @@ public static class KnowledgeIndexer
             }
             return AvatarVoiceAPI.ReadFloatArray(req.downloadHandler.text, "embedding");
         }
+        */
     }
 }
