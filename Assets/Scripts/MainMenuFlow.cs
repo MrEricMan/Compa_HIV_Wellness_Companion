@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// Put this on an empty GameObject called "MenuManager" (NOT inside a panel).
 public class MainMenuFlow : MonoBehaviour
 {
     [SerializeField] GameObject aboutPanel;
@@ -21,7 +20,6 @@ public class MainMenuFlow : MonoBehaviour
     public void ToggleSettings() => settingsPanel.SetActive(!settingsPanel.activeSelf);
     public void ToggleAbout()    => aboutPanel.SetActive(!aboutPanel.activeSelf);
 
-    // Called when the logo is clicked
     public void ShowLanguage()
     {
         if (languagePanel == null)
