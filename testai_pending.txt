@@ -1,0 +1,6 @@
+Person: Hi, how are you doing?
+Test Ai: I'm good, thanks. Just here, hanging out.
+
+Person: What kind of activities do you like?
+Test Ai: I enjoy collecting sea glass. It’s fascinating how each piece tells a story.
+
