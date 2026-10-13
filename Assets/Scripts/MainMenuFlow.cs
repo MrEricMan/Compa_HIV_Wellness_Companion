@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuFlow : MonoBehaviour
 {
@@ -12,21 +13,17 @@ public class MainMenuFlow : MonoBehaviour
         settingsPanel.SetActive(false);
         if (languagePanel != null) languagePanel.SetActive(false);
     }
+    
+    public void StartGame()
+    {
+        SceneManager.LoadScene("SampleScene");
+
+    }
 
     public void OpenAbout()     => aboutPanel.SetActive(true);
     public void CloseAbout()    => aboutPanel.SetActive(false);
     public void OpenSettings()  => settingsPanel.SetActive(true);
     public void CloseSettings() => settingsPanel.SetActive(false);
     public void ToggleSettings() => settingsPanel.SetActive(!settingsPanel.activeSelf);
-    public void ToggleAbout()    => aboutPanel.SetActive(!aboutPanel.activeSelf);
 
-    public void ShowLanguage()
-    {
-        if (languagePanel == null)
-        {
-            Debug.Log("Logo clicked! Language panel not built yet.");
-            return;
-        }
-        languagePanel.SetActive(true);
-    }
 }

@@ -17,7 +17,7 @@ public class MenuLogo : MonoBehaviour, IPointerClickHandler
     [SerializeField] float pressScale = 1.3f;
     [SerializeField] float pressDuration = 0.35f;
 
-    public UnityEvent onLogoPressed;              // wire to MainMenuFlow.ShowLanguage in Inspector
+    public UnityEvent onLogoPressed;              
 
     RectTransform rt;
     CanvasGroup group;
@@ -61,7 +61,6 @@ public class MenuLogo : MonoBehaviour, IPointerClickHandler
         onLogoPressed?.Invoke();
     }
 
-    // Call if you ever return to the welcome screen
     public void ResetLogo()
     {
         StopAllCoroutines();
