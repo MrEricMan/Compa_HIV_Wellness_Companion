@@ -11,7 +11,8 @@ public class MainMenuFlow : MonoBehaviour
     {
         aboutPanel.SetActive(false);
         settingsPanel.SetActive(false);
-        if (languagePanel != null) languagePanel.SetActive(false);
+        languagePanel.SetActive(false);
+
     }
     
     public void StartGame()
@@ -22,6 +23,8 @@ public class MainMenuFlow : MonoBehaviour
 
     public void OpenAbout()     => aboutPanel.SetActive(true);
     public void CloseAbout()    => aboutPanel.SetActive(false);
+    public void OpenLanguage()    => languagePanel.SetActive(true);
+
     public void OpenSettings()  => settingsPanel.SetActive(true);
     public void CloseSettings() => settingsPanel.SetActive(false);
     public void ToggleSettings() => settingsPanel.SetActive(!settingsPanel.activeSelf);
