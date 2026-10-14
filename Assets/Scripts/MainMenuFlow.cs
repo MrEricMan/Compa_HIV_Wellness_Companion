@@ -17,7 +17,7 @@ public class MainMenuFlow : MonoBehaviour
     
     public void StartGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("APTCenterScene");
 
     }
 
