@@ -847,8 +847,8 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Compa_HIV_Wellness_Companion
-  metroPackageVersion: 
+  metroPackageName: CompaHIVWellnessCompanion
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -856,7 +856,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: Compa_HIV_Wellness_Companion
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Compa_HIV_Wellness_Companion
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
