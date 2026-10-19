@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSpawner
   objectToSpawn: {fileID: 3171055065191641093, guid: 5e6d2f033abc96f4e827d31cd9fe04fd, type: 3}
   spawnInterval: 2
-  spawnDuration: 35
+  spawnDuration: 10
 --- !u!212 &36641581
 SpriteRenderer:
   serializedVersion: 2
@@ -226,6 +226,104 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &344231446
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208365219514754230, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392331294905131028, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+      propertyPath: m_Name
+      value: Pause Menu
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 4411127707037809140, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c42865aaa6911534ba6e675f1685887d, type: 3}
 --- !u!1 &701669460
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSpawner
   objectToSpawn: {fileID: 3171055065191641093, guid: 5e6d2f033abc96f4e827d31cd9fe04fd, type: 3}
   spawnInterval: 2
-  spawnDuration: 35
+  spawnDuration: 10
 --- !u!212 &701669462
 SpriteRenderer:
   serializedVersion: 2
@@ -444,7 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSpawner
   objectToSpawn: {fileID: 3171055065191641093, guid: 5e6d2f033abc96f4e827d31cd9fe04fd, type: 3}
   spawnInterval: 2
-  spawnDuration: 35
+  spawnDuration: 10
 --- !u!212 &866664770
 SpriteRenderer:
   serializedVersion: 2
@@ -920,7 +1018,7 @@ MonoBehaviour:
   m_text: 'Minigame Complete
 
 
-    You Won: Lamp
+    You Won: Couch
 
 '
   m_isRightToLeft: 0
@@ -1047,7 +1145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameTimer
   panel: {fileID: 1079434462}
-  activationDelay: 60
+  activationDelay: 20
 --- !u!1 &1321040257
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,7 +1178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSpawner
   objectToSpawn: {fileID: 3171055065191641093, guid: 5e6d2f033abc96f4e827d31cd9fe04fd, type: 3}
   spawnInterval: 2
-  spawnDuration: 35
+  spawnDuration: 10
 --- !u!212 &1321040259
 SpriteRenderer:
   serializedVersion: 2
@@ -1324,7 +1422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BubbleSpawner
   objectToSpawn: {fileID: 3171055065191641093, guid: 5e6d2f033abc96f4e827d31cd9fe04fd, type: 3}
   spawnInterval: 2
-  spawnDuration: 35
+  spawnDuration: 10
 --- !u!212 &1482656141
 SpriteRenderer:
   serializedVersion: 2
@@ -1905,3 +2003,4 @@ SceneRoots:
   - {fileID: 1711979127}
   - {fileID: 1295095265}
   - {fileID: 1791142382}
+  - {fileID: 344231446}
