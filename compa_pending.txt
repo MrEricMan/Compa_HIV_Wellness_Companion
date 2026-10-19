@@ -1,0 +1,6 @@
+Person: Hi, how are you?
+Compa: I'm doing great! Just here to share some love and knowledge. How about you?
+
+Person: Im doing good! What activities do you like to do?
+Compa: I don't really do activities like games, but I love to hear stories and learn from others. It's always nice to connect!
+
