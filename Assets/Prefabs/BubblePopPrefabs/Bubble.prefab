@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1223723050104561891}
   - component: {fileID: 7458866694356515329}
   - component: {fileID: 8869635218871566956}
+  - component: {fileID: 89221598283700983}
   m_Layer: 0
   m_Name: Bubble
   m_TagString: Untagged
@@ -111,8 +112,9 @@ MonoBehaviour:
   sprite4: {fileID: 170860389, guid: 99d65b1ea6c47d048b5ec68bf0e68644, type: 3}
   sprite5: {fileID: 2084303941, guid: 99d65b1ea6c47d048b5ec68bf0e68644, type: 3}
   neighborSpacing: {x: 2, y: 2}
+  neighborSearchRadius: 0.15
   moveSpeed: 1
-  popSound: {fileID: 8300000, guid: 67839441f5f7acb4e87d7a8212267477, type: 3}
+  popSound: {fileID: 8300000, guid: 101949de550b1ea4cbe11eeba7ea7cc8, type: 3}
 --- !u!65 &8869635218871566956
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -134,3 +136,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 2.165717}
   m_Center: {x: 0, y: 0, z: 0.037617326}
+--- !u!54 &89221598283700983
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171055065191641093}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
