@@ -1,16 +1,9 @@
 using UnityEngine;
 
-public class DialogueManager : MonoBehaviour
+public class NPCDialogue : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public string npcName = "NPC";
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [TextArea(2, 5)]
+    public string[] lines;
 }
