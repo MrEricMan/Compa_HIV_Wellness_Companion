@@ -2547,6 +2547,7 @@ GameObject:
   - component: {fileID: 2108467619}
   - component: {fileID: 2108467618}
   - component: {fileID: 2108467620}
+  - component: {fileID: 2108467621}
   m_Layer: 5
   m_Name: Table
   m_TagString: Untagged
@@ -2637,6 +2638,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2108467621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2108467616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc0312bf3b4c144183410fbc22027ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PseudoCode
+  textObjects:
+  - {fileID: 1366554218}
+  - {fileID: 2137634091}
+  - {fileID: 1077407424}
+  - {fileID: 1293684816}
+  - {fileID: 911519460}
+  - {fileID: 984656421}
+  foodImages:
+  - {fileID: 1808645473}
+  - {fileID: 1077445568}
+  - {fileID: 2146469003}
+  - {fileID: 2046775274}
+  - {fileID: 2073696400}
+  - {fileID: 1301172024}
 --- !u!1 &2137634089
 GameObject:
   m_ObjectHideFlags: 0

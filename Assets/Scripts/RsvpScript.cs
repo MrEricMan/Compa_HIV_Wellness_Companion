@@ -1,63 +1,81 @@
 using UnityEngine;
-
-public class PseudoCode : MonoBehaviour
+using UnityEngine.UI;
+using TMPro;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
+ 
+public class RsvpScript : MonoBehaviour
 {
-//
-// Note: this was just quickly made to give an example
-// It is not fully functional with the systems currently
-//in the game.
 
-    // Objects shown when the minigame is won.
-    [SerializeField] private GameObject foodToShow;
-    [SerializeField] private GameObject textToShow;
+    [SerializeField] private TextMeshProUGUI[] textObjects;
+    [SerializeField] private Image[] foodImages;
+ 
 
-    private bool minigameWasWon;
+    private readonly Color32 lockedColor = new Color32(0x7a, 0x7a, 0x7a, 235);
 
-    // Runs when this script first loads and hides the food and win text.
+    private readonly Color32 unlockedColor = new Color32(0xff, 0xff, 0xff, 255);
+ 
+    // tracks win temp
+    private int nextTestWin = 0;
+ 
     private void Awake()
     {
-        // These objects should be disabled in the table until the
-        // minigame has been completed.
-        SetMinigameObjectsActive(false);
+        for (int i = 0; i < textObjects.Length; i++)
+        {
+            SetTextAlpha(textObjects[i], 0f);
+        }
+ 
+        for (int i = 0; i < foodImages.Length; i++)
+        {
+            foodImages[i].color = lockedColor;
+        }
     }
-
+ 
+    // to be removed with tempwintracker after win conditions are added
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-            {
-                MinigameWon();
-            }
-    }
-
-    // Call this method when the player wins any minigame.
-    public void MinigameWon()
-    {
-        minigameWasWon = true;
-        CheckMinigameWin();
-    }
-
-    // Checks whether the minigame was won before showing the table objects.
-    private void CheckMinigameWin()
-    {
-        if (!minigameWasWon)
+        if (EPressedThisFrame() && nextTestWin < textObjects.Length)
         {
+            WinMinigame(nextTestWin);
+            nextTestWin++;
+        }
+    }
+ 
+    private bool EPressedThisFrame()
+    {
+#if ENABLE_INPUT_SYSTEM
+        return Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame;
+#else
+        return Input.GetKeyDown(KeyCode.E);
+#endif
+    }
+ 
+    /// Call this when a minigame is won
+    public void WinMinigame(int index)
+    {
+        if (index < 0 || index >= textObjects.Length || index >= foodImages.Length)
+        {
+            Debug.LogWarning($"MinigameProgress: invalid minigame index {index}");
             return;
         }
-
-        SetMinigameObjectsActive(true);
+ 
+        SetTextAlpha(textObjects[index], 1f);
+ 
+        if (foodImages[index] != null)
+            foodImages[index].color = unlockedColor;
     }
-
-    // Shows or hides the food and win text GameObjects.
-    private void SetMinigameObjectsActive(bool isActive)
+ 
+    private void SetTextAlpha(Component target, float alpha)
     {
-        if (foodToShow != null)
+        if (target == null) return;
+ 
+        if (target is TMP_Text tmp)
         {
-            foodToShow.SetActive(isActive);
-        }
-
-        if (textToShow != null)
-        {
-            textToShow.SetActive(isActive);
+            Color c = tmp.color;
+            c.a = alpha;
+            tmp.color = c;
+            tmp.alpha = alpha;
         }
     }
 }
