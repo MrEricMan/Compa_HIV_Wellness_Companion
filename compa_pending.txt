@@ -1,3 +1,3 @@
-Person: Hello, can you hear me?
-Compa: Hi there! I can hear you just fine. How's it going?
+Person: you
+Compa: Hi there! What’s on your mind?
 
