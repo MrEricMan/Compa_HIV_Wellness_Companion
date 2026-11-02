@@ -1171,10 +1171,10 @@ RectTransform:
   - {fileID: 1460270381}
   m_Father: {fileID: 1629916276}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 655, y: 302.2}
-  m_SizeDelta: {x: 440, y: 130}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -550, y: -330}
+  m_SizeDelta: {x: 320, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &409200760
 MonoBehaviour:
@@ -3196,7 +3196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -241.8, y: 110.1}
+  m_AnchoredPosition: {x: -241.8, y: -165.7}
   m_SizeDelta: {x: 1018, y: 418}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &988141502
@@ -4604,7 +4604,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1629916274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4681,31 +4681,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TutorialDialogue
   lines:
   - speaker: Valentine
-    text: "Welcome to the building, Compa! Compa\u2019 is a friendly way to say friend
-      or buddy in Spanish, and that\u2019s what I\u2019m here to be. "
+    text: "Welcome to the building, compa! Compa\u2019 is a friendly way to say friend
+      or buddy in Spanish, and that\u2019s what I\u2019m here to be."
   - speaker: Valentine
-    text: "I\u2019m your new roommate,My name is Valentine, and I\u2019m an axolotl!
-      We\u2019re known for our ability to regrow and heal, which is a little reminder
-      that there\u2019s always room for growth and new beginnings!"
+    text: "I\u2019m your new roommate, Valentine, and yes, I am an axolotl! "
   - speaker: Valentine
-    text: "You don\u2019t have to figure everything out alone. We can learn together,
-      one step at a time. I\u2019ll be here to help as you explore the building and
-      get to know your new neighbors. "
+    text: "We\u2019re known for our ability to regrow and heal, which is a little
+      reminder that there\u2019s always room for new beginnings."
   - speaker: Valentine
-    text: As you play, you can interact different floors and residents! Before I
-      forget.....
+    text: Before I forget.....
   - speaker: Valentine
-    text: "There is an upcoming potluck!! but..... no one has RSVP yet... sad right?
-      To help bring the community together, you\u2019ll meet all of your neighbors
-      and invite them to join! "
+    text: "There\u2019s an upcoming potluck!!! but..... no one has RSVP yet... sad,
+      right? "
   - speaker: Valentine
-    text: "You can invite everyone by winning the mini games and learning about what
-      makes each resident special. Along the way, you\u2019ll learn about HIV, prevention,
+    text: To bring everyone together, I need your help in inviting them to join!
+  - speaker: Valentine
+    text: "You can invite everyone by winning the mini-games and learning what makes
+      each resident special. Along the way, you\u2019ll learn about HIV, prevention,
       and caring for your health."
   - speaker: Valentine
-    text: "Whenever you are ready to head out, you can use the map to visit different
-      community spaces! Shhh I recommend starting at the elevator! Let\u2019s start
-      exploring! "
+    text: You can even talk to me about it!  We can learn together, one step at a
+      time.
+  - speaker: Valentine
+    text: "Whenever you\u2019re ready to head out, you can use the map to visit different
+      community spaces. Shhh, I recommend starting at the elevator!\n"
   speakerText: {fileID: 698510418}
   bodyText: {fileID: 524391102}
   nextScene: APTCenterScene
