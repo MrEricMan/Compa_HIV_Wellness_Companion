@@ -1,3 +1,0 @@
-Person: Hello, can you hear me?
-Compa: Hi there! I can hear you just fine. How's it going?
-
