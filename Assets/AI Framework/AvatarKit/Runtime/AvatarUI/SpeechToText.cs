@@ -20,8 +20,8 @@ public class SpeechToText : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (avatarBrain != null) {avatarBrain.OnSpeechButtonUp();}
     }
 
-    public void OnDisable(PointerEventData eventData)
-    {
-        if (avatarBrain != null) {avatarBrain.OnSpeechButtonUp();}
-    }
+   // public void OnDisable(PointerEventData eventData)
+   // {
+   //     if (avatarBrain != null) {avatarBrain.OnSpeechButtonUp();}
+   // }
 }
