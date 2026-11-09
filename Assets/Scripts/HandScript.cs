@@ -25,7 +25,6 @@ public class HandScript : MonoBehaviour
     [SerializeField] private Vector2 handOffset = new Vector2(30f, -20f);
 
     [Header("Screen Temp")]
-    //[SerializeField] private GameObject startScreen;
     [SerializeField] private Button startButton;
 
     private Vector2 hiddenPosition;
