@@ -441,7 +441,7 @@ public static class AvatarVoiceAPI
     string modelId = "audio/tts/elevenlabs/eleven_multilingual_v2";
 
     // Place ElevenLabs voice ID here if needed to change vvv
-    string voiceId = "Oh4KughZIPKTet83J6dt";
+    string voiceId = "NCXuWNJQQvNzPsNoESwl";
 
     if (string.IsNullOrWhiteSpace(text))
     {
