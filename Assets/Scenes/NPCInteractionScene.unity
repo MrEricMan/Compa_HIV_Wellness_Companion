@@ -1676,6 +1676,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTriggers
   textReferenced: {fileID: 880257623}
   dialogueCanvas: {fileID: 536715946}
+  _conversationSource: {fileID: 0}
+  _minigameId: BubblePopTrain
+  _minigameScene: BubblePopMinigameScene
+  _minigameInvitation: I am having some trouble understanding the train of life analogy.
+    Think you can help me out?
+  _postWinDialogue:
+  - Ok I think I get it now! Thanks, Ill be sure to show up to the potluck later!
+  _dayDialogues:
+  - day: 2
+    lines:
+    - insert placeholder dialogue
+  _nextDayScene: APTCenterScene
 --- !u!114 &960020813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2180,6 +2192,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTriggers
   textReferenced: {fileID: 880257623}
   dialogueCanvas: {fileID: 536715946}
+  _conversationSource: {fileID: 960020812}
+  _minigameId: BubblePopTrain
+  _minigameScene: BubblePopMinigameScene
+  _minigameInvitation: I am having some trouble understanding the train of life analogy.
+    Think you can help me out?
+  _postWinDialogue:
+  - insert placeholder dialogue
+  _dayDialogues:
+  - day: 2
+    lines:
+    - insert placeholder dialogue
+  _nextDayScene: APTCenterScene
 --- !u!114 &1285389139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2328,6 +2352,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTriggers
   textReferenced: {fileID: 880257623}
   dialogueCanvas: {fileID: 536715946}
+  _conversationSource: {fileID: 960020812}
+  _minigameId: BubblePopTrain
+  _minigameScene: BubblePopMinigameScene
+  _minigameInvitation: I am having some trouble understanding the train of life analogy.
+    Think you can help me out?
+  _postWinDialogue:
+  - insert placeholder dialogue
+  _dayDialogues:
+  - day: 2
+    lines:
+    - insert placeholder dialogue
+  _nextDayScene: APTCenterScene
 --- !u!114 &1301983230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2476,6 +2512,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTriggers
   textReferenced: {fileID: 880257623}
   dialogueCanvas: {fileID: 536715946}
+  _conversationSource: {fileID: 960020812}
+  _minigameId: BubblePopTrain
+  _minigameScene: BubblePopMinigameScene
+  _minigameInvitation: I am having some trouble understanding the train of life analogy.
+    Think you can help me out?
+  _postWinDialogue:
+  - insert placeholder dialogue
+  _dayDialogues:
+  - day: 2
+    lines:
+    - insert placeholder dialogue
+  _nextDayScene: APTCenterScene
 --- !u!114 &1337802774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2858,6 +2906,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTriggers
   textReferenced: {fileID: 880257623}
   dialogueCanvas: {fileID: 536715946}
+  _conversationSource: {fileID: 960020812}
+  _minigameId: BubblePopTrain
+  _minigameScene: BubblePopMinigameScene
+  _minigameInvitation: I am having some trouble understanding the train of life analogy.
+    Think you can help me out?
+  _postWinDialogue:
+  - insert placeholder dialogue
+  _dayDialogues:
+  - day: 2
+    lines:
+    - insert placeholder dialogue
+  _nextDayScene: APTCenterScene
 --- !u!114 &1621702007
 MonoBehaviour:
   m_ObjectHideFlags: 0

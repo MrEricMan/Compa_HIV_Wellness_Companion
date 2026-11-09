@@ -278,6 +278,7 @@ public class TrainMinigameController : MonoBehaviour
     private void EndGame(bool won)
     {
         HasEnded = true; HasWon = won; _shootRequested = false;
+        if (won) GameProgressManager.Instance.RecordWin(GameProgressManager.BubblePopTrainId);
         if (_aimLine != null) _aimLine.enabled = false;
         _resultText.text = won ? "Train stopped!\n\nKai agreed to join the potluck." : "Track ended — Try again";
         _retryButton.gameObject.SetActive(!won); _returnButton.gameObject.SetActive(won);
