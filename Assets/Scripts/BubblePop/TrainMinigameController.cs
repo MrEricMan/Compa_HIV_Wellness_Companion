@@ -68,6 +68,11 @@ public class TrainMinigameController : MonoBehaviour
     private readonly List<Vector3> _shotVelocities = new List<Vector3>();
     private readonly List<float> _shotAges = new List<float>();
     private bool _shootRequested;
+    private Vector2 _pointerPosition;
+    private Vector2 _shotPointerPosition;
+    private UnityEngine.InputSystem.InputAction _pointAction;
+    private UnityEngine.InputSystem.InputAction _pressAction;
+    private readonly List<UnityEngine.EventSystems.RaycastResult> _uiHits = new List<UnityEngine.EventSystems.RaycastResult>();
     private bool _paused;
     private float _spawnElapsed;
     private float _inactivityElapsed;
@@ -94,11 +99,53 @@ public class TrainMinigameController : MonoBehaviour
         for (int i = 0; i < _passingObjects.Length; i++) _sceneryPositions[i] = _passingObjects[i].position;
         _retryButton.onClick.AddListener(RestartGame);
         _returnButton.onClick.AddListener(ReturnToScene);
+        _pointAction = new UnityEngine.InputSystem.InputAction("Aim", UnityEngine.InputSystem.InputActionType.PassThrough);
+        UnityEngine.InputSystem.InputActionSetupExtensions.AddBinding(_pointAction, "<Mouse>/position");
+        UnityEngine.InputSystem.InputActionSetupExtensions.AddBinding(_pointAction, "<Touchscreen>/primaryTouch/position");
+        _pressAction = new UnityEngine.InputSystem.InputAction("Shoot", UnityEngine.InputSystem.InputActionType.PassThrough);
+        UnityEngine.InputSystem.InputActionSetupExtensions.AddBinding(_pressAction, "<Mouse>/leftButton");
+        UnityEngine.InputSystem.InputActionSetupExtensions.AddBinding(_pressAction, "<Touchscreen>/primaryTouch/press");
+        _pointAction.performed += OnPointerMoved;
+        _pressAction.performed += OnPointerPressed;
+    }
+
+    private void OnEnable() { _pointAction.Enable(); _pressAction.Enable(); }
+    private void OnDisable() { _pointAction.Disable(); _pressAction.Disable(); _shootRequested = false; }
+    private void OnPointerMoved(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        _pointerPosition = context.ReadValue<Vector2>();
+    }
+    private void OnPointerPressed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (!context.ReadValueAsButton() || HasEnded || _paused || Time.timeScale == 0f) return;
+        // Read the position from the device that pressed, not a stale mouse position.
+        if (context.control.device is UnityEngine.InputSystem.Touchscreen touchscreen)
+            _shotPointerPosition = touchscreen.primaryTouch.position.ReadValue();
+        else if (context.control.device is UnityEngine.InputSystem.Mouse mouse)
+            _shotPointerPosition = mouse.position.ReadValue();
+        else return;
+        _pointerPosition = _shotPointerPosition;
+        _shootRequested = true;
+    }
+    private bool IsOverUi(Vector2 position)
+    {
+        var eventSystem = UnityEngine.EventSystems.EventSystem.current;
+        if (eventSystem == null) return false;
+        // Raycast this tap directly; cached hover state may belong to the previous frame.
+        _uiHits.Clear();
+        eventSystem.RaycastAll(new UnityEngine.EventSystems.PointerEventData(eventSystem) { position = position }, _uiHits);
+        foreach (var hit in _uiHits)
+            if (hit.module is UnityEngine.UI.GraphicRaycaster) return true;
+        return false;
     }
 
     private void Start() { RestartGame(); }
     private void OnDestroy()
     {
+        _pointAction.performed -= OnPointerMoved;
+        _pressAction.performed -= OnPointerPressed;
+        _pointAction.Dispose();
+        _pressAction.Dispose();
         if (_retryButton != null) _retryButton.onClick.RemoveListener(RestartGame);
         if (_returnButton != null) _returnButton.onClick.RemoveListener(ReturnToScene);
     }
@@ -129,7 +176,7 @@ public class TrainMinigameController : MonoBehaviour
         if (HasEnded || _paused || Time.timeScale == 0f) { _shootRequested = false; return; }
         float dt = Time.deltaTime;
         _fireCooldown -= dt;
-        Vector2 pointer = UnityEngine.Input.mousePosition;
+        Vector2 pointer = _shootRequested ? _shotPointerPosition : _pointerPosition;
         Vector3 target = _aimCamera.ScreenToWorldPoint(new Vector3(pointer.x, pointer.y, -_aimCamera.transform.position.z));
         target.z = 0f;
         Vector3 direction = (target - _firePosition.position).normalized;
@@ -138,8 +185,7 @@ public class TrainMinigameController : MonoBehaviour
             _aimLine.SetPosition(0, _firePosition.position);
             _aimLine.SetPosition(1, direction.x < 0f ? target : _firePosition.position);
         }
-        if (UnityEngine.Input.GetMouseButtonDown(0) && direction.x < 0f && _fireCooldown <= 0f &&
-            (UnityEngine.EventSystems.EventSystem.current == null || !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()))
+        if (_shootRequested && direction.x < 0f && _fireCooldown <= 0f && !IsOverUi(pointer))
         {
             var shot = MakeSprite("Bubble Shot", _projectileSprite, _firePosition.position, 0.32f, 30, transform);
             _shots.Add(shot); _shotVelocities.Add(direction * _projectileSpeed); _shotAges.Add(0f);
