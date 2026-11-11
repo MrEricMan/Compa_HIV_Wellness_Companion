@@ -1,0 +1,6 @@
+Person: Can you hear me?
+Compa: I can! What's on your mind?
+
+Person: Can you read this?
+Compa: I can see what you’re saying. What would you like to talk about?
+
