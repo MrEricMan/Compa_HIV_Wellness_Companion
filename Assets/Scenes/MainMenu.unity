@@ -819,11 +819,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3074672575957160634, guid: 0dec0ef45888f8849a489d922b9a7448, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.9999999
       objectReference: {fileID: 0}
     - target: {fileID: 3074672575957160634, guid: 0dec0ef45888f8849a489d922b9a7448, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.08333343
+      value: 0.083333254
       objectReference: {fileID: 0}
     - target: {fileID: 3989427294593059748, guid: 0dec0ef45888f8849a489d922b9a7448, type: 3}
       propertyPath: m_Pivot.x
