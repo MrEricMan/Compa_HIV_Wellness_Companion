@@ -201,16 +201,6 @@ public class AvatarBrain : MonoBehaviour
 #endif
     }
 
-    public void OnSpeechButtonDown()
-    {
-        if (_state == State.Idle || _state == State.Speaking) {_buttonHeld = true;}
-    }
-
-    public void OnSpeechButtonUp()
-    {
-        _buttonHeld = false;
-    }
-
     void StartRecording()
     {
         _recording = Microphone.Start(_mic, false, recordSeconds, sampleRate);

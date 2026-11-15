@@ -11,7 +11,7 @@ public class LobbyButtons : MonoBehaviour
 
     public void PlayerRoomButton()
     {
-        SceneManager.LoadScene("InteractionPrototype");
+        SceneManager.LoadScene("PlayerRoom");
     }
 
     public void BackButton(string sceneName)
