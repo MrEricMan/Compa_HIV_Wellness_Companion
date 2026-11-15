@@ -101,10 +101,10 @@ public class TrainMinigameController : MonoBehaviour
         _returnButton.onClick.AddListener(ReturnToScene);
         _pointAction = new UnityEngine.InputSystem.InputAction("Aim", UnityEngine.InputSystem.InputActionType.PassThrough);
         UnityEngine.InputSystem.InputActionSetupExtensions.AddBinding(_pointAction, "<Mouse>/position");
-        UnityEngine.InputSystem.InputActionSetupExtensions.AddBinding(_pointAction, "<Touchscreen>/primaryTouch/position");
+        UnityEngine.InputSystem.InputActionSetupExtensions.AddBinding(_pointAction, "<Touchscreen>/touch*/position");
         _pressAction = new UnityEngine.InputSystem.InputAction("Shoot", UnityEngine.InputSystem.InputActionType.PassThrough);
         UnityEngine.InputSystem.InputActionSetupExtensions.AddBinding(_pressAction, "<Mouse>/leftButton");
-        UnityEngine.InputSystem.InputActionSetupExtensions.AddBinding(_pressAction, "<Touchscreen>/primaryTouch/press");
+        UnityEngine.InputSystem.InputActionSetupExtensions.AddBinding(_pressAction, "<Touchscreen>/touch*/press");
         _pointAction.performed += OnPointerMoved;
         _pressAction.performed += OnPointerPressed;
     }
@@ -118,9 +118,10 @@ public class TrainMinigameController : MonoBehaviour
     private void OnPointerPressed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (!context.ReadValueAsButton() || HasEnded || _paused || Time.timeScale == 0f) return;
-        // Read the position from the device that pressed, not a stale mouse position.
-        if (context.control.device is UnityEngine.InputSystem.Touchscreen touchscreen)
-            _shotPointerPosition = touchscreen.primaryTouch.position.ReadValue();
+        // Use the contact that pressed. primaryTouch can remain held while another
+        // contact taps (including a stale contact in the Device Simulator).
+        if (context.control.parent is UnityEngine.InputSystem.Controls.TouchControl touch)
+            _shotPointerPosition = touch.position.ReadValue();
         else if (context.control.device is UnityEngine.InputSystem.Mouse mouse)
             _shotPointerPosition = mouse.position.ReadValue();
         else return;
