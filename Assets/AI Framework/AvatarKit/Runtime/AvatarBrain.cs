@@ -69,19 +69,9 @@ public class AvatarBrain : MonoBehaviour
     GUIStyle _small, _bubble;
     bool _buttonHeld;
 
-    #if UNITY_WEBGL && !UNITY_EDITOR
-        void Start()
-        {
-            _lastReply = "AI companion unavailable in this playtest.";
-        }
-
-        public void OnSpeechButtonDown() { }
-        public void OnSpeechButtonUp() { }
-        public void SayTestLine() { }
-    #else
-        void Start()
-        {
-            // Without this, the Editor throttles Play mode whenever its window
+    void Start()
+    {
+        // Without this, the Editor throttles Play mode whenever its window
         // loses focus: coroutines stall, web requests never finish, and your
         // character silently never answers -- with nothing logged. This one
         // line saves a genuinely baffling hour.
@@ -400,5 +390,4 @@ public class AvatarBrain : MonoBehaviour
             }
         }
     }
-#endif
 }
