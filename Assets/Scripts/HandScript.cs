@@ -9,13 +9,16 @@ public class HandScript : MonoBehaviour
     [Header("References")]
     [SerializeField] private RectTransform hand;
     [SerializeField] private RectTransform dial;
-
+    [SerializeField] private GameObject volumePanel;
+    public Slider slider;
+    public Image fill;
+    
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private TMP_Text volumeText;
     [SerializeField] private float targetVolume = 1f;
     [SerializeField] private float volumeIncreaseSpeed = 0.1f;
-    [SerializeField] private float volumeDecreaseSpeed = 0.2f;
+    [SerializeField] private float volumeDecreaseSpeed = 0.05f;
 
     private bool volumeUp = false;
     private bool dialHeld = false;
@@ -48,13 +51,19 @@ public class HandScript : MonoBehaviour
     {
         hiddenPosition = hand.anchoredPosition;
         hand.gameObject.SetActive(false);
+        volumePanel.SetActive(false);
     }
 
     public void StartGame()
     {
         Debug.Log("[HandScript] StartGame called!");
         
-        if (startButton != null) {startButton.gameObject.SetActive(false);}
+        if (startButton != null) 
+        {
+            startButton.gameObject.SetActive(false);
+            volumePanel.SetActive(true);
+        }
+
         if (audioSource != null) 
         {
             audioSource.Play();
