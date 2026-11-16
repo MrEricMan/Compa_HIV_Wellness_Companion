@@ -184,11 +184,11 @@ public class HandScript : MonoBehaviour
 
             hand.gameObject.SetActive(false);
 
-            Debug.Log("Hidden Position: " + hiddenPosition);
-            Debug.Log("Dial Local Position: " + dialLocalPosition);
-            Debug.Log("Button Position: " + buttonPosition);
-            Debug.Log("Hand Pivot: " + hand.pivot);
-            Debug.Log("Hand Size: " + hand.rect.size);
+            //Debug.Log("Hidden Position: " + hiddenPosition);
+            //Debug.Log("Dial Local Position: " + dialLocalPosition);
+            //Debug.Log("Button Position: " + buttonPosition);
+            //Debug.Log("Hand Pivot: " + hand.pivot);
+            //Debug.Log("Hand Size: " + hand.rect.size);
         }
 
         hand.gameObject.SetActive(false);
