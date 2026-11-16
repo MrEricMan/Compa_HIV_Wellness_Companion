@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/APTCenterScene.unity
     guid: 012e7e8c970633f47a126477000b3343
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/InteractionPrototype.unity
     guid: e0275eeff86d0444c84360e06d2ffadb
   - enabled: 1
