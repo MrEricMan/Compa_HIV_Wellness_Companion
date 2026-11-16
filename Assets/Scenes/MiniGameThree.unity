@@ -429,7 +429,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 58941089}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 753985123}
+        m_TargetAssemblyTypeName: DialogueRunnerMiniGame3, Assembly-CSharp
+        m_MethodName: OnChoose
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &58941089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,7 +606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 268.8, y: -42.66}
+  m_AnchoredPosition: {x: 312.9, y: 142.9}
   m_SizeDelta: {x: 138.55, y: 74.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &224015763
@@ -640,7 +652,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 224015764}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 753985123}
+        m_TargetAssemblyTypeName: DialogueRunnerMiniGame3, Assembly-CSharp
+        m_MethodName: OnTap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &224015764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -697,7 +721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &239846783
 RectTransform:
   m_ObjectHideFlags: 0
@@ -715,7 +739,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -112.3, y: -63.3}
+  m_AnchoredPosition: {x: -100, y: 136}
   m_SizeDelta: {x: 138.55005, y: 74.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &239846784
@@ -762,10 +786,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 98a2d6c02022d6445a39b8eda38d574e, type: 3}
-        m_TargetAssemblyTypeName: UnityEditor.MonoScript, UnityEditor.CoreModule
-        m_MethodName: set_name
-        m_Mode: 5
+      - m_Target: {fileID: 753985123}
+        m_TargetAssemblyTypeName: DialogueRunnerMiniGame3, Assembly-CSharp
+        m_MethodName: OnTap
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -894,7 +918,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 334779320}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 753985123}
+        m_TargetAssemblyTypeName: DialogueRunnerMiniGame3, Assembly-CSharp
+        m_MethodName: OnChoose
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &334779320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,8 +1629,10 @@ MonoBehaviour:
   compaRoomPanel: {fileID: 671409909}
   choicePanel: {fileID: 1518932523}
   backButton: {fileID: 1779726614}
-  darkColor: {r: 0.12156863, g: 0.18039216, b: 0.2, a: 1}
-  creamColor: {r: 0.91764706, g: 0.87058824, b: 0.78431374, a: 1}
+  npcBubbleColor: {r: 0.12156863, g: 0.18039216, b: 0.2, a: 1}
+  npcTextColor: {r: 0.91764706, g: 0.87058824, b: 0.78431374, a: 1}
+  youBubbleColor: {r: 0.18431373, g: 0.30980393, b: 0.33333334, a: 1}
+  youTextColor: {r: 0.91764706, g: 0.87058824, b: 0.78431374, a: 1}
   charsPerSecond: 45
   mapScene: APTCenterScene
   stage1Lines:
@@ -1706,8 +1744,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -123}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 410, y: -123}
+  m_SizeDelta: {x: 740, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &820057491
 MonoBehaviour:
@@ -1729,9 +1767,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "One of my relatives keeps using HIV and AIDS <br>like they mean the same
-    thing. I know there\u2019s <br>a difference, but I\u2019m not sure how to explain
-    it. <br>Do you know? Can you ask Compa?"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d90461de5000fff4bba86ae7332e2a4d, type: 2}
   m_sharedMaterial: {fileID: 9003161767097698605, guid: d90461de5000fff4bba86ae7332e2a4d, type: 2}
@@ -1775,7 +1811,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 0
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -2145,7 +2181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0861f7949c1ba2543b5ca66872bde36e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f56080c3d36ae40429e5cac49406e2f2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2197,8 +2233,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -123}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 420, y: -123}
+  m_SizeDelta: {x: 726.4, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1101529992
 MonoBehaviour:
@@ -2220,7 +2256,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Hey! What\u2019s on your mind?"
+  m_text: text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d90461de5000fff4bba86ae7332e2a4d, type: 2}
   m_sharedMaterial: {fileID: 9003161767097698605, guid: d90461de5000fff4bba86ae7332e2a4d, type: 2}
@@ -2264,7 +2300,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 0
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -2382,7 +2418,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1267043870}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 753985123}
+        m_TargetAssemblyTypeName: DialogueRunnerMiniGame3, Assembly-CSharp
+        m_MethodName: OnChoose
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1267043870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2998,7 +3046,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1779726617}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 753985123}
+        m_TargetAssemblyTypeName: DialogueRunnerMiniGame3, Assembly-CSharp
+        m_MethodName: GoBackToNpc
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1779726617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3119,7 +3179,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1842357207}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 753985123}
+        m_TargetAssemblyTypeName: DialogueRunnerMiniGame3, Assembly-CSharp
+        m_MethodName: OnChoose
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1842357207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3517,13 +3589,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 98a2d6c02022d6445a39b8eda38d574e, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 753985123}
+        m_TargetAssemblyTypeName: DialogueRunnerMiniGame3, Assembly-CSharp
+        m_MethodName: OpenCompaRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3604,8 +3676,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -5, y: 111.8}
-  m_SizeDelta: {x: 800, y: 361}
+  m_AnchoredPosition: {x: 7.85, y: 87.6}
+  m_SizeDelta: {x: 850, y: 411}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1945003774
 MonoBehaviour:
@@ -3627,7 +3699,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0861f7949c1ba2543b5ca66872bde36e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f56080c3d36ae40429e5cac49406e2f2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

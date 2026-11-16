@@ -41,8 +41,10 @@ public class DialogueRunnerMiniGame3 : MonoBehaviour
     [SerializeField] GameObject backButton;   // "Back to NCP"
 
     [Header("Bubble colors")]
-    [SerializeField] Color darkColor  = new Color32(0x1F, 0x2E, 0x33, 255);
-    [SerializeField] Color creamColor = new Color32(0xEA, 0xDE, 0xC8, 255);
+    [SerializeField] Color npcBubbleColor = new Color32(0x1F, 0x2E, 0x33, 255); // dark ink
+    [SerializeField] Color npcTextColor   = new Color32(0xEA, 0xDE, 0xC8, 255); // cream
+    [SerializeField] Color youBubbleColor = new Color32(0xEA, 0xDE, 0xC8, 255); // cream
+    [SerializeField] Color youTextColor   = new Color32(0x1F, 0x2E, 0x33, 255); // dark ink
 
     [Header("Settings")]
     [SerializeField] float charsPerSecond = 45f;
@@ -96,6 +98,7 @@ public class DialogueRunnerMiniGame3 : MonoBehaviour
         compaRoomPanel.SetActive(true);
         choicePanel.SetActive(false);
         backButton.SetActive(false);
+        npcPanel.SetActive(false);
         UseCompaBubble();
         Play(compaGreeting, ShowChoices);
     }
@@ -118,6 +121,7 @@ public class DialogueRunnerMiniGame3 : MonoBehaviour
         backButton.SetActive(false);
         compaRoomPanel.SetActive(false);
         jamiiArrow.SetActive(true);    // arrow returns for the closing scene
+        npcPanel.SetActive(true);
         UseJamiiBubble();
         Play(stage3Lines, FinishMinigame);
     }
@@ -164,10 +168,10 @@ public class DialogueRunnerMiniGame3 : MonoBehaviour
     // "You" = cream bubble, dark text. Everyone else = dark bubble, cream text.
     void ApplyStyle(string who)
     {
-        bool isYou = who.Trim().ToLower() == "you";
-        bubbleImage.color = isYou ? creamColor : darkColor;
-        bodyText.color    = isYou ? darkColor  : creamColor;
-        speakerText.color = isYou ? darkColor  : creamColor;
+    bool isYou = who.Trim().ToLower() == "you";
+    bubbleImage.color = isYou ? youBubbleColor : npcBubbleColor;
+    bodyText.color    = isYou ? youTextColor   : npcTextColor;
+    speakerText.color = isYou ? youTextColor   : npcTextColor;
     }
 
     IEnumerator Type(string full)
