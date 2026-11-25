@@ -1263,7 +1263,7 @@ MonoBehaviour:
   m_text: Hey, hows it going? I just moved in and thought I would say hi. My names
     Kai, it is nice to meet you.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d90461de5000fff4bba86ae7332e2a4d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1360,6 +1360,219 @@ RectTransform:
   m_AnchoredPosition: {x: 475, y: 0}
   m_SizeDelta: {x: 950, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &957816967
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 781534795637298188, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 781534795637298188, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 781534795637298188, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 781534795637298188, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -313
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303812763519592747, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_Name
+      value: RsvpUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303812763519592747, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781861244637184820, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781861244637184820, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781861244637184820, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781861244637184820, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -217
+      objectReference: {fileID: 0}
+    - target: {fileID: 2622921272516920829, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2622921272516920829, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2622921272516920829, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 2622921272516920829, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -121
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100381109831527778, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100381109831527778, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100381109831527778, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100381109831527778, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -265
+      objectReference: {fileID: 0}
+    - target: {fileID: 3331843284039039824, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3331843284039039824, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3331843284039039824, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 3331843284039039824, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -169
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309896092547517034, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251518222009277006, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251518222009277006, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251518222009277006, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251518222009277006, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -73
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151349259484689465, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151349259484689465, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151349259484689465, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151349259484689465, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -25
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1af56191593e53a42a5115e1423eb4ea, type: 3}
 --- !u!1 &958178695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,7 +1757,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -224, y: -42.86}
-  m_SizeDelta: {x: 94.05, y: 222.3716}
+  m_SizeDelta: {x: 209.29, y: 222.3716}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &960020812
 MonoBehaviour:
@@ -1563,6 +1776,7 @@ MonoBehaviour:
   _conversationSource: {fileID: 0}
   _minigameId: BubblePopTrain
   _minigameScene: BubblePopMinigameScene
+  _dialogueOnly: 0
   _minigameInvitation: I am having some trouble understanding the train of life analogy.
     Think you can help me out?
   _postWinDialogue:
@@ -1572,7 +1786,7 @@ MonoBehaviour:
     lines:
     - Hey! Thanks for the help yesterday, I''ll be sure to show up at the potluck
       later!
-  _nextDayScene: APTCenterScene
+  _nextDayScene: LobbyScene
 --- !u!114 &960020813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1649,7 +1863,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 631044378, guid: 65598c275f962964ca3452deb7dbdc9f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 30f7218010063de4b85dc2de31fa8c43, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2080,6 +2294,7 @@ MonoBehaviour:
   _conversationSource: {fileID: 960020812}
   _minigameId: BubblePopTrain
   _minigameScene: BubblePopMinigameScene
+  _dialogueOnly: 0
   _minigameInvitation: I am having some trouble understanding the train of life analogy.
     Think you can help me out?
   _postWinDialogue:
@@ -2240,6 +2455,7 @@ MonoBehaviour:
   _conversationSource: {fileID: 960020812}
   _minigameId: BubblePopTrain
   _minigameScene: BubblePopMinigameScene
+  _dialogueOnly: 0
   _minigameInvitation: I am having some trouble understanding the train of life analogy.
     Think you can help me out?
   _postWinDialogue:
@@ -2400,6 +2616,7 @@ MonoBehaviour:
   _conversationSource: {fileID: 960020812}
   _minigameId: BubblePopTrain
   _minigameScene: BubblePopMinigameScene
+  _dialogueOnly: 0
   _minigameInvitation: I am having some trouble understanding the train of life analogy.
     Think you can help me out?
   _postWinDialogue:
@@ -2923,6 +3140,7 @@ MonoBehaviour:
   _conversationSource: {fileID: 960020812}
   _minigameId: BubblePopTrain
   _minigameScene: BubblePopMinigameScene
+  _dialogueOnly: 0
   _minigameInvitation: I am having some trouble understanding the train of life analogy.
     Think you can help me out?
   _postWinDialogue:
@@ -3077,6 +3295,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd05fee30f7b37c4aac9849f5517116d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCTouch
+  _onClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1661093288
 Transform:
   m_ObjectHideFlags: 0
