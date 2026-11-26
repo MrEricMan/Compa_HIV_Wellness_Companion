@@ -52,6 +52,7 @@ public class TrainMinigameController : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Button _returnButton;
     [SerializeField] private GameObject _pausePanel;
     [SerializeField] private Transform[] _passingObjects;
+    [SerializeField] private TrainTrackScroller _trackScroller;
     [SerializeField] private float _sceneryLeft = -11f;
     [SerializeField] private float _sceneryRight = 11f;
     [SerializeField] private float _scenerySpeedScale = 0.5f;
@@ -161,6 +162,7 @@ public class TrainMinigameController : MonoBehaviour
         _resultPanel.SetActive(false);
         if (_pausePanel != null) _pausePanel.SetActive(false);
         for (int i = 0; i < _passingObjects.Length; i++) _passingObjects[i].position = _sceneryPositions[i];
+        if (_trackScroller != null) _trackScroller.ResetTrack();
         RefreshHud();
     }
 
@@ -209,6 +211,7 @@ public class TrainMinigameController : MonoBehaviour
             if (ActiveBubbleCount < Mathf.Min(round.bubbleLimit, _cells.Length)) SpawnRandomBubble();
         }
         _distanceTravelled = Mathf.Min(_trackDistance, _distanceTravelled + round.trainSpeed * dt);
+        if (_trackScroller != null) _trackScroller.Scroll(round.trainSpeed * _scenerySpeedScale * dt);
         foreach (var passing in _passingObjects)
         {
             passing.position += Vector3.left * (round.trainSpeed * _scenerySpeedScale * dt);

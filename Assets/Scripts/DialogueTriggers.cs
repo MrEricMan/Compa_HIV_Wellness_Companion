@@ -22,6 +22,8 @@ public class DialogueTriggers : MonoBehaviour
     [SerializeField] private string _minigameScene = "BubblePopMinigameScene";
 
     [Header("Dialogue")]
+    [Tooltip("Use only the Inspector day/lines entries. Never offer a minigame, auto-open a follow-up, or advance the day.")]
+    [SerializeField] private bool _dialogueOnly;
     [TextArea]
     [SerializeField] private string _minigameInvitation = "I am having some trouble understanding the train of life analogy. Think you can help me out?";
     [SerializeField] private string[] _postWinDialogue = { "insert placeholder dialogue" };
@@ -64,7 +66,13 @@ public class DialogueTriggers : MonoBehaviour
             Debug.LogError("NPC conversation requires its dialogue text and panel references.", this);
             return;
         }
-        if (_progress.HasPendingFollowUp(_minigameId)) OpenConversation();
+        if (_progress == null)
+        {
+            Debug.LogError("NPC conversation requires the session GameProgressManager.", this);
+            dialogueCanvas.SetActive(false);
+            return;
+        }
+        if (!_dialogueOnly && _progress.HasPendingFollowUp(_minigameId)) OpenConversation();
         else dialogueCanvas.SetActive(false);
     }
 
@@ -86,6 +94,11 @@ public class DialogueTriggers : MonoBehaviour
     public void PlayerClick()
     {
         var source = Source;
+        if (source.textReferenced == null || source.dialogueCanvas == null || source._progress == null)
+        {
+            Debug.LogError("NPC conversation is missing its text, panel, or session progress reference.", source);
+            return;
+        }
         if (source.dialogueCanvas.activeSelf) source.CloseConversation();
         else source.OpenConversation();
     }
@@ -93,12 +106,12 @@ public class DialogueTriggers : MonoBehaviour
     private void OpenConversation()
     {
         _lineIndex = 0;
-        if (_progress.HasPendingFollowUp(_minigameId))
+        if (!_dialogueOnly && _progress.HasPendingFollowUp(_minigameId))
         {
             _conversationType = ConversationType.PostWin;
             _activeLines = _postWinDialogue;
         }
-        else if (_progress.CurrentDay == 1 && !_progress.HasWonMinigame(_minigameId))
+        else if (!_dialogueOnly && _progress.CurrentDay == 1 && !_progress.HasWonMinigame(_minigameId))
         {
             _conversationType = ConversationType.Introduction;
             _activeLines = new[] { _firstOpen ? _introductoryDialogue : "How is it going?", _minigameInvitation };
@@ -108,7 +121,7 @@ public class DialogueTriggers : MonoBehaviour
         {
             _conversationType = ConversationType.Daily;
             _activeLines = null;
-            foreach (var dialogue in _dayDialogues)
+            foreach (var dialogue in _dayDialogues ?? Array.Empty<DayDialogue>())
             {
                 if (dialogue != null && dialogue.day == _progress.CurrentDay)
                 {
@@ -157,7 +170,7 @@ public class DialogueTriggers : MonoBehaviour
 
     private void CloseConversation()
     {
-        dialogueCanvas.SetActive(false);
+        if (dialogueCanvas != null) dialogueCanvas.SetActive(false);
         _activeLines = null;
     }
 
