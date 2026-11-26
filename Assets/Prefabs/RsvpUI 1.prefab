@@ -488,12 +488,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4606833923273327710}
-  - {fileID: 7042418261991662957}
-  - {fileID: 3874646997993641137}
-  - {fileID: 1462328075532221339}
   - {fileID: 7578465941998473205}
+  - {fileID: 1462328075532221339}
   - {fileID: 7240104987297620004}
   - {fileID: 453044788073060002}
+  - {fileID: 3874646997993641137}
+  - {fileID: 7042418261991662957}
   m_Father: {fileID: 919500232798404232}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1822,19 +1822,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PseudoCode
   textObjects:
-  - {fileID: 3447997067777732683}
-  - {fileID: 5774773225947369294}
-  - {fileID: 3261370077388284318}
   - {fileID: 6233345301887758084}
+  - {fileID: 3261370077388284318}
   - {fileID: 2278524105405897677}
   - {fileID: 9143547173187384333}
+  - {fileID: 5774773225947369294}
+  - {fileID: 3447997067777732683}
   foodImages:
-  - {fileID: 4433721396971014218}
-  - {fileID: 5247573651101971071}
-  - {fileID: 6750843022515144701}
   - {fileID: 840555295857860470}
+  - {fileID: 6750843022515144701}
   - {fileID: 1552608018494010407}
   - {fileID: 1102283528568826635}
+  - {fileID: 5247573651101971071}
+  - {fileID: 4433721396971014218}
+  minigameIds:
+  - BubblePopTrain
 --- !u!1 &6684416833206454235
 GameObject:
   m_ObjectHideFlags: 0
