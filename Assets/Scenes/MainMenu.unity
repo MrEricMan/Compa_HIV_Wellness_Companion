@@ -235,8 +235,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 336.79996, y: -75.39998}
-  m_SizeDelta: {x: 165, y: 90}
+  m_AnchoredPosition: {x: 374.8, y: -75.39998}
+  m_SizeDelta: {x: 158, y: 84}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &120149370
 MonoBehaviour:
@@ -1171,10 +1171,10 @@ RectTransform:
   - {fileID: 1460270381}
   m_Father: {fileID: 1629916276}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 655, y: 302.2}
-  m_SizeDelta: {x: 440, y: 130}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -520, y: -330}
+  m_SizeDelta: {x: 286, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &409200760
 MonoBehaviour:
@@ -1264,7 +1264,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 80078f159c40a1a42b8ec585372490ba, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7d39e6d27dfe63e4c975809bc800d35d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4094,17 +4094,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: SKIP
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d90461de5000fff4bba86ae7332e2a4d, type: 2}
+  m_sharedMaterial: {fileID: 9003161767097698605, guid: d90461de5000fff4bba86ae7332e2a4d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4283781166
+  m_fontColor: {r: 0.18039216, g: 0.3137255, b: 0.33333334, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4121,8 +4121,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
