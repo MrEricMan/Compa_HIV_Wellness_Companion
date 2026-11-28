@@ -22,6 +22,11 @@ public class DialogueRunnerMiniGame3 : MonoBehaviour
         public DialogueLine[] response;  // lines that play after this button is clicked
     }
 
+    [Header("Info panel")]
+    [SerializeField] GameObject infoPanel;          // the panel explaining minigame 3
+    [SerializeField] float infoDelay = 1f;          // pause after the last line
+    [SerializeField] float zoomDuration = 0.5f;
+
     [Header("Jamii bubble")]
     [SerializeField] Image jamiiBubbleImage;
     [SerializeField] TMP_Text jamiiSpeakerText;
@@ -72,7 +77,7 @@ public class DialogueRunnerMiniGame3 : MonoBehaviour
         choicePanel.SetActive(false);
         backButton.SetActive(false);
         jamiiArrow.SetActive(false);   // no arrow at the start
-
+        infoPanel.SetActive(false);
         UseJamiiBubble();
         Play(stage1Lines, () => compaButton.SetActive(true), true);
     }
@@ -128,8 +133,42 @@ public class DialogueRunnerMiniGame3 : MonoBehaviour
 
     void FinishMinigame()
     {
-        SceneManager.LoadScene(mapScene);
+        //SceneManager.LoadScene(mapScene);
+        StartCoroutine(ShowInfoPanel());
+    
     }
+    IEnumerator ShowInfoPanel()
+    {
+    yield return new WaitForSeconds(infoDelay);
+
+    // The panel needs a CanvasGroup to fade. Add one if it's missing.
+    CanvasGroup group = infoPanel.GetComponent<CanvasGroup>();
+    if (group == null) group = infoPanel.AddComponent<CanvasGroup>();
+
+    Transform t = infoPanel.transform;
+    t.localScale = Vector3.one * 0.8f;
+    group.alpha = 0f;
+    infoPanel.SetActive(true);
+
+    float time = 0f;
+    while (time < zoomDuration)
+    {
+        time += Time.unscaledDeltaTime;
+        float p = Mathf.SmoothStep(0f, 1f, time / zoomDuration);
+        t.localScale = Vector3.one * Mathf.Lerp(0.8f, 1f, p);
+        group.alpha = p;
+        yield return null;
+    }
+
+    t.localScale = Vector3.one;
+    group.alpha = 1f;
+    }
+    
+    public void ReturnToMap()
+    {
+    SceneManager.LoadScene(mapScene);
+    }
+    
 
     public void Play(DialogueLine[] lines, Action done, bool autoFinishWhenTyped = false)
     {
